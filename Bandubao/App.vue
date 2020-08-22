@@ -13,5 +13,8 @@
 </script>
 
 <style>
-	/*每个页面公共css */
+	/* 每个页面公共css uni官方字体库 */
+	@import '@/static/common/uni.css';
+	/* 自定义字体库 */
+	@import '@/static/common/icon.css';
 </style>
