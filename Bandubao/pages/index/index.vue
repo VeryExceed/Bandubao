@@ -153,6 +153,27 @@
 				</view>
 			</view>
 		</view>
+		<!-- 弹出年级选择 -->
+		<uni-popup ref="popup">
+			<view class="select-grade">
+				<view>选择您所在的年级</view>
+				<view>
+					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('学龄前')">学龄前</button>
+					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('一年级')">一年级</button>
+				</view>
+				<view>
+					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('二年级')">二年级</button>
+					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('三年级')">三年级</button>
+				</view>
+				<view>
+					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('四年级')">四年级</button>
+					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('五年级')">五年级</button>
+				</view>
+				<view>
+					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('六年级')">六年级</button>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -166,17 +187,33 @@
 		onLoad() {
 
 		},
+		// 监听导航栏按钮点击事件
+		onNavigationBarButtonTap(e) {
+			if(e.index == 1) {
+				this.$refs.popup.open()
+			}
+		},
 		methods: {
 			gotoLearn() {
 				uni.switchTab({
 					url: "../bestTeach/bestTeach"
 				})
+			},
+			hidePopup(text){
+				// #ifdef APP-PLUS
+				var webView = this.$mp.page.$getAppWebview();
+				webView.setTitleNViewButtonStyle(1,{
+					text:text
+				})
+				// #endif
+				this.$refs.popup.close()
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	// title 混合器
 	@mixin titleStyle {
 		border-left: 10rpx solid #007Aff;
 		border-ridius: 5rpx;
@@ -374,5 +411,25 @@
 				}
 			}
 		}
+	}
+	.select-grade {
+		background-color: #58bc58;
+		border-radius: 10px;
+		padding: 20px;
+	}
+	.select-grade .grade-btn {
+		display: inline-block;
+		border-radius: 40rpx;
+		margin-right: 10rpx;
+	}
+	.grade-btn-hover {
+		background-color: #007AFF;
+		color: #FFFFFF;
+	}
+	.select-grade>view:first-child{
+		font-weight: bold;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 20rpx;
 	}
 </style>

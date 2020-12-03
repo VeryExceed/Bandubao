@@ -3,7 +3,30 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"color":"#000000",
+								"colorPressed":"#000000",
+								"float":"left",
+								"fontSize":"22px",
+								"width":"115upx",
+								"text":" 首页 | "
+							},
+							{
+								"color":"#000000",
+								"colorPressed":"#BBBBBB",
+								"float":"left",
+								"fontSize":"18px",
+								"width":"130upx",
+								"text":"年级",
+								"select":true
+							}
+						]
+					}
+				}
 			}
 		}, {
 			"path": "pages/task/task",
