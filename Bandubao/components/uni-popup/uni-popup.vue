@@ -11,7 +11,7 @@
 
 <script>
 	import uniTransition from '../uni-transition/uni-transition.vue'
-
+	import popup from './popup.js'
 	/**
 	 * PopUp 弹出层
 	 * @description 弹出层组件，为了解决遮罩弹层的问题
@@ -47,6 +47,12 @@
 				default: true
 			}
 		},
+		provide() {
+			return {
+				popup: this
+			}
+		},
+		mixins: [popup],
 		data() {
 			return {
 				duration: 300,
@@ -132,7 +138,8 @@
 					}, 50);
 				})
 				this.$emit('change', {
-					show: true
+					show: true,
+					type:this.type
 				})
 			},
 			close(type) {
@@ -141,7 +148,8 @@
 					clearTimeout(this.timer)
 					this.timer = setTimeout(() => {
 						this.$emit('change', {
-							show: false
+							show: false,
+							type:this.type
 						})
 						this.showPopup = false
 					}, 300)

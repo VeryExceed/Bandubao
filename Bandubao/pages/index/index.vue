@@ -153,26 +153,18 @@
 				</view>
 			</view>
 		</view>
+		<!-- 推荐 -->
+		<view class="share-xiaoxuebao">
+			<button type="primary" @tap="shareXiaoxuebao">
+				<text>推荐小学宝APP</text>
+				<view class="iconfont icon-icon-test4"></view>
+			</button>
+		</view>
 		<!-- 弹出年级选择 -->
-		<uni-popup ref="popup">
-			<view class="select-grade">
-				<view>选择您所在的年级</view>
-				<view>
-					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('学龄前')">学龄前</button>
-					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('一年级')">一年级</button>
-				</view>
-				<view>
-					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('二年级')">二年级</button>
-					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('三年级')">三年级</button>
-				</view>
-				<view>
-					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('四年级')">四年级</button>
-					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('五年级')">五年级</button>
-				</view>
-				<view>
-					<button type="default" class="grade-btn" hover-class="grade-btn-hover" @tap="hidePopup('六年级')">六年级</button>
-				</view>
-			</view>
+		<popup-grada ref="popupGradeIndex" @hidePopup="hidePopup"></popup-grada>
+		<!-- 分享示例 -->
+		<uni-popup ref="popupShare" type="bottom" @change="change">
+			<uni-popup-share title="分享到" @select="select"></uni-popup-share>
 		</uni-popup>
 	</view>
 </template>
@@ -189,8 +181,8 @@
 		},
 		// 监听导航栏按钮点击事件
 		onNavigationBarButtonTap(e) {
-			if(e.index == 1) {
-				this.$refs.popup.open()
+			if (e.index == 1) {
+				this.$refs.popupGradeIndex.showPopup()
 			}
 		},
 		methods: {
@@ -199,15 +191,58 @@
 					url: "../bestTeach/bestTeach"
 				})
 			},
-			hidePopup(text){
-				// #ifdef APP-PLUS
+			hidePopup(text) {
+				//移动端APP适用，H5端不适用
+				// #ifdef APP-PLUS  
+				// $getAppWebview() 可以得到当前webview的对象实例
 				var webView = this.$mp.page.$getAppWebview();
-				webView.setTitleNViewButtonStyle(1,{
-					text:text
+				// 修改buttons  
+				webView.setTitleNViewButtonStyle(1, {
+					text: text
 				})
 				// #endif
-				this.$refs.popup.close()
-			}
+			},
+			// 打开分享示例
+			shareXiaoxuebao() {
+				this.$refs.popupShare.open()
+			},
+			/**
+			 * popup 状态发生变化触发
+			 * @param {Object} e
+			 */
+			change(e) {
+				console.log('popup ' + e.type + ' 状态', e.show)
+			},
+			/**
+			 * 选择内容
+			 */
+			select(e, done) {
+				uni.showToast({
+					title: `您选择了第${e.index+1}项：${e.item.text}`,
+					icon: 'none'
+				})
+				if (e.item.name == 'more') {
+					// #ifdef APP-PLUS
+					plus.share.sendWithSystem({
+						content: '分享内容',
+					})
+					// #endif
+				} else {
+					uni.share({
+						provider: `${e.item.provider}`,
+						scene: `${e.item.scene}`,
+						type: 2,
+						imageUrl: "../../static/img/firstpage/gokearn.png",
+						success: function(res) {
+							console.log("success:" + JSON.stringify(res));
+						},
+						fail: function(err) {
+							console.log("fail:" + JSON.stringify(err));
+						}
+					});
+				}
+				done()
+			},
 		}
 	}
 </script>
@@ -391,16 +426,20 @@
 					border-radius: 100%;
 				}
 			}
+
 			>view:nth-of-type(2) {
 				display: flex;
 				justify-content: space-between;
 				flex-wrap: wrap;
-				>view{
+
+				>view {
 					width: 50%;
-					image{
+
+					image {
 						width: 90%;
 						border-radius: 20rpx;
 					}
+
 					view:nth-of-type(2) {
 						display: flex;
 						justify-content: space-between;
@@ -412,24 +451,27 @@
 			}
 		}
 	}
-	.select-grade {
-		background-color: #58bc58;
-		border-radius: 10px;
-		padding: 20px;
+
+	.share-xiaoxuebao {
+		margin-top: 20rpx;
 	}
-	.select-grade .grade-btn {
-		display: inline-block;
-		border-radius: 40rpx;
-		margin-right: 10rpx;
-	}
-	.grade-btn-hover {
-		background-color: #007AFF;
-		color: #FFFFFF;
-	}
-	.select-grade>view:first-child{
-		font-weight: bold;
+
+	.share-xiaoxuebao>button {
 		display: flex;
+		align-items: center;
 		justify-content: center;
-		margin-bottom: 20rpx;
+		width: 60%;
+		background: #F7F8F9;
+	}
+
+	.share-xiaoxuebao>button>text {
+		color: #000000;
+		font-size: 25rpx;
+	}
+
+	.share-xiaoxuebao>button>view {
+		margin-left: 6rpx;
+		color: #000000;
+		font-weight: bold;
 	}
 </style>
