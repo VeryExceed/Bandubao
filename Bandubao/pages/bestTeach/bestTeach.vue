@@ -1,7 +1,7 @@
 <template>
-	<view>
+	<view class="body">
 		<!-- 自定义导航栏 -->
-		<uni-nav-bar @clickLeft="selectGradde" @clickRight="openWrongNote">
+		<uni-nav-bar @clickLeft="selectGrade" @clickRight="openWrongNote" fixed>
 			<view class="lesson-bar-left" slot="left">
 				<text>{{selectedGrade}} ▼</text>
 			</view>
@@ -28,15 +28,28 @@
 		</view>
 		<!-- 分割线 -->
 		<view class="cut-off-rule-line"></view>
-		<!-- 语数英选项卡 -->
+		<!-- 语数外选项卡 -->
 		<view class="chinese-math-english">
 			<text :class="{'ysw-active':tabIndex==0}" @tap="tapSelect(0)">语文</text>
 			<text :class="{'ysw-active':tabIndex==1}" @tap="tapSelect(1)">数学</text>
 			<text :class="{'ysw-active':tabIndex==2}" @tap="tapSelect(2)">英语</text>
 		</view>
+		<!-- 课程列表 缩减版 -->
+		<view class="ysw-swiper">
+			<swiper :current="tabIndex" @change="tabChange" :style="{height:swiperHeight+'rpx'}">
+				<swiper-item v-for="(item,name) in yswlessonsless">
+					<scroll-view scroll-y class="list">
+						<lesson-list-less lessonsubcat="同步课" :selectLessons="item.synclessons" :yswtype="name" catetype="synclesson"></lesson-list-less>
+						<lesson-list-less lessonsubcat="寒暑课" :selectLessons="item.holidaylessons" :yswtype="name" catetype="holidaylesson"></lesson-list-less>
+						<lesson-list-less lessonsubcat="专题课" :selectLessons="item.speciallessons" :yswtype="name" catetype="speciallesson"></lesson-list-less>
+						<lesson-list-less lessonsubcat="冲刺课" :selectLessons="item.shootlessons" :yswtype="name" catetype="shootlesson"></lesson-list-less>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+		</view>
+
 		<!-- 弹出年级选择 -->
 		<popup-grada ref="popupGradeIndex" @hidePopup="hidePopup"></popup-grada>
-		
 	</view>
 </template>
 
@@ -46,17 +59,26 @@
 			return {
 				selectedGrade: '学龄前',
 				selectActive: true,
-				tabIndex:0
+				tabIndex: 0,
+				swiperHeight: 800,
+				yswlessonsless: {},
 			};
 		},
+		onLoad() {
+			this.$http.get('/api/lessonlist-less', {})
+				.then(res => {
+					console.log('res=='+JSON.stringify(res.data));
+					this.yswlessonsless = res.data
+				})
+				.catch(err => {});
+		},
 		methods: {
-			selectGradde() {
+			selectGrade() {
 				this.$refs.popupGradeIndex.showPopup()
 			},
 			openWrongNote() {
 
 			},
-			// 选课上课切换
 			selectLearnButtonChange(text) {
 				if (text == 'select') {
 					this.selectActive = true
@@ -67,96 +89,103 @@
 			hidePopup(text) {
 				this.selectedGrade = text
 			},
-			openLessonDetail(V) {
-				
+			openLessonDetail(v) {
+
 			},
-			tapSelect(i){
+			tapSelect(i) {
 				this.tabIndex = i
+			},
+			tabChange(e) {
+				this.tabIndex = e.detail.current
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.lesson-bar-middle {
+
+.lesson-bar-middle{
+	display: flex;
+	button{
+		border-radius: 50upx;
+		background-color: #f7f8f9;
+		width: 160upx;
 		display: flex;
-
-		button {
-			border-radius: 50rpx;
-			background-color: #f7f8f9;
-			width: 160rpx;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: 60rpx;
-
-			&.select-active {
-				color: #fff;
-				background-color: #58bc58;
-			}
-		}
-	}
-
-	.lesson-bar-right {
-		font-size: 38rpx;
-	}
-
-	.uni-navbar__header-container.uni-navbar__content_view {
-		display: flex;
+		align-items: center;
 		justify-content: center;
+		height: 60upx;
+		&.select-active{
+			color: #fff;
+			background-color: #01affe;
+		}
 	}
-
-	.uni-navbar__header.uni-navbar__content_view {
-		margin: 40rpx 0 10rpx 0;
-	}
-	.lesson-category-stage {
+}
+.lesson-bar-right{
+	font-size: 38upx;
+}
+.uni-navbar__header-container.uni-navbar__content_view{
+	display: flex;
+	justify-content: center;
+}
+.uni-navbar__header.uni-navbar__content_view{
+	margin: 40upx 0 10upx 0;
+}
+.uni-navbar__content{
+	width: 100%;
+}
+.lesson-category-stage{
+	display: flex;
+	justify-content: space-between;
+	margin: 20upx 5%;
+	margin-top: 60upx;
+	>view{
 		display: flex;
-		justify-content: space-between;
-		margin: 20rpx 5%;
-		>view {
+		flex-direction: column;
+		align-items: center;
+		font-size: 28upx;
+		color: #A4A8AD;
+		>view{
+			border-radius: 100%;
+			color: #FFFFFF;
+			font-size: 60upx;
+			height: 120upx;
+			width: 120upx;
 			display: flex;
-			flex-direction: column;
-			align-items: center;
-			font-size: 28rpx;
-			color: #A4A8AD;
-			>view {
-				border-radius: 100%;
-				color: #FFFFFF;
-				font-size: 60rpx;
-				height: 120rpx;
-				width: 120rpx;
-				display: flex;
-				justify-content: center;
-				&.icon-jiachang_shujia{
-					background-color: #4FBDFF;
-				}
-				&.icon-rili {
-					background-color: #71EBD6;
-				}
-				&.icon-icon-test6 {
-					background-color: #A182FF;
-				}
-				&.icon-icon-test9 {
-					background-color: #F97244;
-				}
+			justify-content: center;
+			&.icon-jiachang_shujia{
+				background-color: #4FBDFF;
+			}
+			&.icon-rili{
+				background-color: #71EBD6;
+			}
+			&.icon-icon-test6{
+				background-color: #A182FF;
+			}
+			&.icon-icon-test9{
+				background-color: #F97244;
 			}
 		}
 	}
-	.cut-off-rule-line {
-		border-top: 5rpx solid #F7F8F9;
-	}
-	.chinese-math-english {
-		display: flex;
-		justify-content: space-around;
-		color:#A4A8AD;
-		padding: 10rpx 0;
-		>text {
-			padding: 10rpx 40rpx;
-			&.ysw-active {
-				color: #31B5F2;
-				background-color: #E5F7FF;
-				border-radius: 30rpx;
-			}
+}
+.cut-off-rule-line{
+	border-top: 5upx solid #F7F8F9;
+}
+.chinese-math-english{
+	display: flex;
+	justify-content: space-around;
+	color: #A4A8AD;
+	padding: 10upx 0;
+	>text{
+		padding: 10upx 40upx;
+		&.ysw-active{
+			color:#31B5F2;
+			background-color: #E5F7FF;
+			border-radius: 30upx;
 		}
 	}
+}
+.ysw-swiper .list{
+	height: 100%;
+}
+
 </style>
