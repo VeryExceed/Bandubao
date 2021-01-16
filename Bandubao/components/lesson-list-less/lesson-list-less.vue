@@ -2,7 +2,7 @@
 	<view class="lesson-cat-less">
 		<view class="line-title">
 			<view class="left">{{lessonsubcat}}</view>
-			<view class="right">
+			<view class="right" v-if="selectLessons.length>1" @tap="openMoreData(catetype,yswtype)">
 				<text>更多</text><text>></text>
 			</view>
 		</view>
@@ -57,6 +57,13 @@
 				default:[]
 			}
 			
+		},
+		methods:{
+			openMoreData(type,yswtype){
+				uni.navigateTo({
+					url:'../lesson-more-list/lesson-more-list?type='+type+'&yswtype='+yswtype
+				})
+			}
 		}
 	}
 </script>

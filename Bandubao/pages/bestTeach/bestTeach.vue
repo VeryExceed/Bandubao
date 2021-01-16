@@ -16,7 +16,7 @@
 			<view class="sync-lesson" @tap="openLessonDetail('synclesson')">
 				<view class="iconfont icon-jiachang_shujia"></view><text>同步课</text>
 			</view>
-			<view class="holidy-lesson" @tap="openLessonDetail('holidylesson')">
+			<view class="holidy-lesson" @tap="openLessonDetail('holidaylesson')">
 				<view class="iconfont icon-rili"></view><text>寒暑课</text>
 			</view>
 			<view class="special-lesson" @tap="openLessonDetail('speciallesson')">
@@ -67,7 +67,7 @@
 		onLoad() {
 			this.$http.get('/api/lessonlist-less', {})
 				.then(res => {
-					console.log('res=='+JSON.stringify(res.data));
+					// console.log('res==' + JSON.stringify(res.data));
 					this.yswlessonsless = res.data
 				})
 				.catch(err => {});
@@ -90,7 +90,9 @@
 				this.selectedGrade = text
 			},
 			openLessonDetail(v) {
-
+				uni.navigateTo({
+					url: "../lesson-more-list/lesson-more-list?type=" + v
+				})
 			},
 			tapSelect(i) {
 				this.tabIndex = i
@@ -103,89 +105,105 @@
 </script>
 
 <style lang="scss">
+	.lesson-bar-middle {
+		display: flex;
 
-.lesson-bar-middle{
-	display: flex;
-	button{
-		border-radius: 50upx;
-		background-color: #f7f8f9;
-		width: 160upx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 60upx;
-		&.select-active{
-			color: #fff;
-			background-color: #01affe;
-		}
-	}
-}
-.lesson-bar-right{
-	font-size: 38upx;
-}
-.uni-navbar__header-container.uni-navbar__content_view{
-	display: flex;
-	justify-content: center;
-}
-.uni-navbar__header.uni-navbar__content_view{
-	margin: 40upx 0 10upx 0;
-}
-.uni-navbar__content{
-	width: 100%;
-}
-.lesson-category-stage{
-	display: flex;
-	justify-content: space-between;
-	margin: 20upx 5%;
-	margin-top: 60upx;
-	>view{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		font-size: 28upx;
-		color: #A4A8AD;
-		>view{
-			border-radius: 100%;
-			color: #FFFFFF;
-			font-size: 60upx;
-			height: 120upx;
-			width: 120upx;
+		button {
+			border-radius: 50upx;
+			background-color: #f7f8f9;
+			width: 160upx;
 			display: flex;
+			align-items: center;
 			justify-content: center;
-			&.icon-jiachang_shujia{
-				background-color: #4FBDFF;
-			}
-			&.icon-rili{
-				background-color: #71EBD6;
-			}
-			&.icon-icon-test6{
-				background-color: #A182FF;
-			}
-			&.icon-icon-test9{
-				background-color: #F97244;
-			}
-		}
-	}
-}
-.cut-off-rule-line{
-	border-top: 5upx solid #F7F8F9;
-}
-.chinese-math-english{
-	display: flex;
-	justify-content: space-around;
-	color: #A4A8AD;
-	padding: 10upx 0;
-	>text{
-		padding: 10upx 40upx;
-		&.ysw-active{
-			color:#31B5F2;
-			background-color: #E5F7FF;
-			border-radius: 30upx;
-		}
-	}
-}
-.ysw-swiper .list{
-	height: 100%;
-}
+			height: 60upx;
 
+			&.select-active {
+				color: #fff;
+				background-color: #01affe;
+			}
+		}
+	}
+
+	.lesson-bar-right {
+		font-size: 38upx;
+	}
+
+	.uni-navbar__header-container.uni-navbar__content_view {
+		display: flex;
+		justify-content: center;
+	}
+
+	.uni-navbar__header.uni-navbar__content_view {
+		margin: 40upx 0 10upx 0;
+	}
+
+	.uni-navbar__content {
+		width: 100%;
+	}
+
+	.lesson-category-stage {
+		display: flex;
+		justify-content: space-between;
+		margin: 20upx 5%;
+		margin-top: 60upx;
+
+		>view {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			font-size: 28upx;
+			color: #A4A8AD;
+
+			>view {
+				border-radius: 100%;
+				color: #FFFFFF;
+				font-size: 60upx;
+				height: 120upx;
+				width: 120upx;
+				display: flex;
+				justify-content: center;
+
+				&.icon-jiachang_shujia {
+					background-color: #4FBDFF;
+				}
+
+				&.icon-rili {
+					background-color: #71EBD6;
+				}
+
+				&.icon-icon-test6 {
+					background-color: #A182FF;
+				}
+
+				&.icon-icon-test9 {
+					background-color: #F97244;
+				}
+			}
+		}
+	}
+
+	.cut-off-rule-line {
+		border-top: 5upx solid #F7F8F9;
+	}
+
+	.chinese-math-english {
+		display: flex;
+		justify-content: space-around;
+		color: #A4A8AD;
+		padding: 10upx 0;
+
+		>text {
+			padding: 10upx 40upx;
+
+			&.ysw-active {
+				color: #31B5F2;
+				background-color: #E5F7FF;
+				border-radius: 30upx;
+			}
+		}
+	}
+
+	.ysw-swiper .list {
+		height: 100%;
+	}
 </style>

@@ -4,86 +4,85 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "",
-				"app-plus":{
-					"bounce":"vertical",
-					"titleNView":{
-						"buttons":[
-							{
-								"color":"#000000",
-								"colorPressed":"#000000",
-								"float":"left",
-								"fontSize":"22px",
-								"width":"115upx",
-								"text":" 首页 | "
+				"app-plus": {
+					// "bounce": "vertical",
+					"titleNView": {
+						"buttons": [{
+								"color": "#000000",
+								"colorPressed": "#000000",
+								"float": "left",
+								"fontSize": "22px",
+								"width": "115upx",
+								"text": " 首页 | "
 							},
 							{
-								"color":"#000000",
-								"colorPressed":"#BBBBBB",
-								"float":"left",
-								"fontSize":"18px",
-								"width":"130upx",
-								"text":"年级",
-								"select":true
+								"color": "#000000",
+								"colorPressed": "#BBBBBB",
+								"float": "left",
+								"fontSize": "18px",
+								"width": "130upx",
+								"text": "年级",
+								"select": true
 							}
 						]
 					}
 				}
 			}
-		}
-	    ,{
-            "path" : "pages/bestTeach/bestTeach",
-            "style" : {
-				"navigationBarTitleText":"",
-				"app-plus":{
-					"titleNView":false
+		}, {
+			"path": "pages/bestTeach/bestTeach",
+			"style": {
+				"navigationBarTitleText": "",
+				"app-plus": {
+					"titleNView": false
 				}
 			}
-        }
-        ,{
-            "path" : "pages/task/task",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/mine/mine",
-            "style" : {}
-        }
-    ],
+		}, {
+			"path": "pages/task/task",
+			"style": {}
+		}, {
+			"path": "pages/mine/mine",
+			"style": {}
+		}, {
+			"path": "pages/lesson-more-list/lesson-more-list",
+			"style": {}
+
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"tabBar":{
-		"color":"#000000",
-		"selectedColor":"#000000",
-		"borderStyle":"black",
-		"iconWidth":"20px",
-		"fontSize":"12px",
-		"list":[
-			{
-				"pagePath":"pages/index/index",
-				"text":"首页",
-				"iconPath":"static/tabbar/shouye.png",
-				"selectedIconPath":"static/tabbar/shouyeselected.png"
+	"tabBar": {
+		"color": "#000000",
+		"selectedColor": "#000000",
+		"borderStyle": "black",
+		"iconWidth": "20px",
+		"fontSize": "12px",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/tabbar/shouye.png",
+				"selectedIconPath": "static/tabbar/shouyeselected.png"
 			},
 			{
-				"pagePath":"pages/bestTeach/bestTeach",
-				"text":"精品课",
-				"iconPath":"static/tabbar/jinpingke.png",
-				"selectedIconPath":"static/tabbar/jingpingke-selected.png"
+				"pagePath": "pages/bestTeach/bestTeach",
+				"text": "精品课",
+				"iconPath": "static/tabbar/jinpingke.png",
+				"selectedIconPath": "static/tabbar/jingpingke-selected.png"
 			},
 			{
-				"pagePath":"pages/task/task",
-				"text":"任务",
-				"iconPath":"static/tabbar/renwu.png",
-				"selectedIconPath":"static/tabbar/renwu-selected.png"
+				"pagePath": "pages/task/task",
+				"text": "任务",
+				"iconPath": "static/tabbar/renwu.png",
+				"selectedIconPath": "static/tabbar/renwu-selected.png"
 			},
 			{
-				"pagePath":"pages/mine/mine",
-				"text":"个人中心",
-				"iconPath":"static/tabbar/me.png",
-				"selectedIconPath":"static/tabbar/me-selected.png"
+				"pagePath": "pages/mine/mine",
+				"text": "个人中心",
+				"iconPath": "static/tabbar/me.png",
+				"selectedIconPath": "static/tabbar/me-selected.png"
 			}
 		]
 	}
