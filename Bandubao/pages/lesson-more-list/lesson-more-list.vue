@@ -75,6 +75,7 @@
 				}
 			})
 			// #endif
+			// 判断点击更多，如果有一级分类，那么继续判断二级分类并跳转
 			if (e["yswtype"]) {
 				switch (e["yswtype"]) {
 					case "chineseLessonless":
