@@ -5,7 +5,7 @@
 				<scroll-view scroll-y class="list">
 					<template v-if="lesson.length>0">
 						<block v-for="(item,i) in lesson" :key="i">
-							<view class="lesson-process-card">
+							<view class="lesson-process-card" @tap="openCourseList(item)">
 								<view class="first-line">
 									<text :class="{'math-word':item.lessonType=='数','chinese-word':item.lessonType=='语','english-word':item.lessonType=='英'}">{{item.lessonType}}</text>
 									<text :class="{'math-season':item.lessonType=='数','chinese-season':item.lessonType=='语','english-season':item.lessonType=='英'}">{{item.season}}</text>
@@ -52,6 +52,12 @@
 		methods:{
 			lessontabChange(e) {
 				this.$emit('lessontabChange',e.detail.current)
+			},
+			openCourseList(lesson){
+				uni.navigateTo({
+					// 跳转课程列表传参 lesson 是Object类型 所以需要用JSON.stringify 转换成字符串
+					url:"../../pages/course-list/course-list?lesson="+ JSON.stringify(lesson)//encodeURIComponent(lesson)
+				})
 			}
 		}
 	}

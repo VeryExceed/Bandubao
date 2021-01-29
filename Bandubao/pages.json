@@ -47,7 +47,18 @@
 			"style": {}
 
 		}
-	],
+	    ,{
+            "path" : "pages/course-list/course-list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "课程列表",
+				"app-plus":{
+					"scrollIndicator":"none"
+				}
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
