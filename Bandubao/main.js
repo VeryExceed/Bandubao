@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-import {http} from '@/static/js/request.js';
+import {http} from '@/static/js/request.js'; // 全局挂载引入
 
 Vue.config.productionTip = false
 Vue.prototype.$http = http

@@ -14,7 +14,7 @@
 		<scroll-view scroll-y style="height: 90%;">
 			<view class="course-list">
 				<block v-for="(item,i) in courseList" :key="i">
-					<view class="course-info">
+					<view class="course-info" @tap="goLearnMainpage(item)">
 						<view class="title">
 							{{item.title}}
 						</view>
@@ -48,12 +48,19 @@
 			this.courseTitleInfo = JSON.parse(e.lesson) //decodeURIComponent(e.lesson)
 			this.$http.get('/api/courselist', {})
 				.then(res => {
-					// console.log('res==' + JSON.stringify(res.data));
+					console.log('res==' + JSON.stringify(res.data));
 					this.courseList = res.data
 				})
 				.catch(err => {
 
 				});
+		},
+		methods:{
+			goLearnMainpage(course) {
+				uni.navigateTo({
+					url:"../learning-main-page/learning-main-page?course="+JSON.stringify(course)
+				})
+			}
 		}
 	}
 </script>
