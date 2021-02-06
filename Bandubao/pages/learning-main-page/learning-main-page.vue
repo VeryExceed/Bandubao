@@ -87,7 +87,9 @@
 				console.log("videoEnded");
 			},
 			goexampage() {
-
+				uni.navigateTo({
+					url:"../exam-paper/exam-paper"
+				})
 			}
 		}
 	}

@@ -70,6 +70,18 @@
             }
             
         }
+        ,{
+            "path" : "pages/exam-paper/exam-paper",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+				"app-plus":{
+					"titleNView":false
+					
+				}
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

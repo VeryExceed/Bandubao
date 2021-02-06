@@ -48,7 +48,7 @@
 			this.courseTitleInfo = JSON.parse(e.lesson) //decodeURIComponent(e.lesson)
 			this.$http.get('/api/courselist', {})
 				.then(res => {
-					console.log('res==' + JSON.stringify(res.data));
+					// console.log('res==' + JSON.stringify(res.data));
 					this.courseList = res.data
 				})
 				.catch(err => {
