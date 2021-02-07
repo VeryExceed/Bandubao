@@ -6,6 +6,16 @@
 			</view>
 		</uni-nav-bar>
 		<!-- 答题区 -->
+		<view class="subject-area">
+			<!-- 题目命题 -->
+			<view class="subject-title">
+				<block v-for="(title,i) in currentSubject.subjectTitle"> :key="i"
+					
+				</block>
+			</view>
+			<!-- 题目选择 -->
+			<!-- 题目解析 -->
+		</view>
 		
 		<!-- 底部操作区 草稿、收藏、下一题 -->
 		<view class="next-subject-btn">
@@ -26,32 +36,44 @@
 	export default {
 		data() {
 			return {
-				subjectInfos:{
-					subjectNum:4,
-					subjects:[]
+				subjectInfos: {
+					subjectNum: 4,
+					subjects: []
 				},
-				currentSubjectNum:1,
-				isAnswered:false,
-				btntext:"下一题",
-				draftselected:false,
-				storeselected:false
+				currentSubjectNum: 1,
+				isAnswered: false,
+				btntext: "下一题",
+				draftselected: false,
+				storeselected: false,
+				currentSubject:{}
 			};
 		},
-		methods:{
-			leftClick(){
+		onLoad() {
+			this.$http.get('/api/subjectInfo',{})
+				.then(res=>{
+					console.log('res==' +JSON.stringify(res.data));
+					this.subjectInfos = res.data
+					
+				})
+				.catch(err=>{
+					
+				});
+		},
+		methods: {
+			leftClick() {
 				uni.navigateBack()
 			},
-			selectOne(selected){
-				if(selected=="draft"){
+			selectOne(selected) {
+				if (selected == "draft") {
 					this.draftselected = !this.draftselected
 					uni.showToast({
 						// 如果为true 那么打开草稿 如皋为flase 取消草稿
-						title:this.draftselected?"打开草稿":"取消草稿"
+						title: this.draftselected ? "打开草稿" : "取消草稿"
 					})
-				}else if (selected=="store") {
+				} else if (selected == "store") {
 					this.storeselected = !this.storeselected
 					uni.showToast({
-						title:this.storeselected?"收藏成功":"取消收藏"
+						title: this.storeselected ? "收藏成功" : "取消收藏"
 					})
 				}
 			}
@@ -60,7 +82,7 @@
 </script>
 
 <style lang="scss">
-.uni-navbar__header-container.uni-navbar__content_view {
+	.uni-navbar__header-container.uni-navbar__content_view {
 		display: flex;
 		justify-content: center;
 	}
@@ -72,6 +94,7 @@
 	.uni-navbar__content {
 		width: 100%;
 	}
+
 	.next-subject-btn {
 		width: 100%;
 		position: fixed;
@@ -80,20 +103,25 @@
 		justify-content: space-between;
 		align-items: center;
 		background-color: #FFFFFF;
-		button{
+
+		button {
 			border-radius: 50rpx;
 			width: 50%;
 			height: fit-content;
-			&.disabled{
+
+			&.disabled {
 				background-color: #aecdef;
 			}
 		}
-		view{
+
+		view {
 			margin-left: 15rpx;
+
 			view:nth-of-type(1) {
 				font-size: 60rpx;
 				color: #ADB2B6;
-				&.active{
+
+				&.active {
 					color: #58BC58;
 				}
 			}
