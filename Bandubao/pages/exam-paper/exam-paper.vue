@@ -10,7 +10,11 @@
 			<!-- 题目命题 -->
 			<view class="subject-title">
 				<block v-for="(title,i) in currentSubject.subjectTitle"> :key="i"
-					
+					<view>
+						<template v-if="title.type=='text'">
+							<view>{{title.content}}</view>
+						</template>
+					</view>
 				</block>
 			</view>
 			<!-- 题目选择 -->
@@ -45,7 +49,7 @@
 				btntext: "下一题",
 				draftselected: false,
 				storeselected: false,
-				currentSubject:{}
+				currentSubject:{} //用来接收当前题目的信息
 			};
 		},
 		onLoad() {
