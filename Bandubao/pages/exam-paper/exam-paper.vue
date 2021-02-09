@@ -18,12 +18,28 @@
 							<image :src="title.url" mode="aspectFit"></image>
 						</template>
 						<template v-else-if="title.type=='input'">
-							<input type="text" class="answer-fill-area" v-model="youanswer" @input="onInput"/>
+							<input type="text" class="answer-fill-area" v-model="youanswer" @input="onInput" />
 						</template>
 					</view>
 				</block>
 			</view>
 			<!-- 题目选择 -->
+			<!-- select是选择题 -->
+			<!-- <template v-if="currentSubject.type=='select'"> -->
+			<view>
+				<block v-for="(option,i) in currentSubject.options" :key="i">
+					<view class="subject-option" :class="{'selected-correct':(-1!=selectOptionIndex && i==currentSubject.correctAnswer),'selected-wrong':(i==selectOptionIndex && i!=currentSubject.courrectAnswer)}"
+					 @tap="selectoneOption(i,option)">
+						<text v-if="currentSubject.type=='select'">{{option.number}}. </text>
+						<text>{{option.content}}</text>
+					</view>
+				</block>
+			</view>
+			<!-- </template> -->
+			<!-- correctorWrong判断题 -->
+			<!-- <template v-if="currentSubject.type=='correctorWrong'">
+				<view></view>
+			</template> -->
 			<!-- 题目解析 -->
 		</view>
 
@@ -55,12 +71,14 @@
 				btntext: "下一题",
 				draftselected: false,
 				storeselected: false,
-				currentSubject: {} //用来接收当前题目的信息
+				currentSubject: {}, //用来接收当前题目的信息
+				selectOptionIndex: -1,
+				isanswercorrect: false
 			};
 		},
-		watch:{// 侦听属性，多用于一步请求的数据联动
-			currentSubjectNum(){
-				this.currentSubject = this.subjectInfos.subjects[this.currentSubjectNum-1]
+		watch: { // 侦听属性，多用于一步请求的数据联动
+			currentSubjectNum() {
+				this.currentSubject = this.subjectInfos.subjects[this.currentSubjectNum - 1]
 			}
 		},
 		onLoad() {
@@ -68,7 +86,7 @@
 				.then(res => {
 					// console.log('res==' + JSON.stringify(res.data));
 					this.subjectInfos = res.data
-					this.currentSubject = this.subjectInfos.subjects[this.currentSubjectNum-1]
+					this.currentSubject = this.subjectInfos.subjects[this.currentSubjectNum - 1]
 				})
 				.catch(err => {
 
@@ -92,15 +110,33 @@
 					})
 				}
 			},
-			gonextsubject(){
+			onInput(e) {
+
+			},
+			gonextsubject() {
 				// 点击下一题页数++
-				if(this.currentSubjectNum <this.subjectInfos.subjectNum){
+				if (this.currentSubjectNum < this.subjectInfos.subjectNum) {
 					this.currentSubjectNum++
+					this.draftselected = false; // 点击下一题初始化
+					this.storeselected = false;
+					this.selectOptionIndex = -1;
+					this.isAnswered = false;
+					uni.pageScrollTo({
+						scrollTop:0,
+						duration:100
+					});
 				}
 			},
-			onInput(e){
-				
+			selectoneOption(i, option) {
+				if (!this.isAnswered) {
+					this.selectOptionIndex = i //等于当前题目的key值 i
+					this.isAnswered = true;
+					if (i == option.correctAnswer) { // 当前i 等于正确的答案时
+						this.isanswercorrect = true  
+					}
+				}
 			}
+
 		}
 	}
 </script>
@@ -171,6 +207,25 @@
 			border: 2rpx solid #09BB07;
 			width: 200rpx;
 			align-content: center;
+		}
+	}
+
+	.subject-option {
+		margin: 30rpx;
+		padding: 20rpx;
+		border-radius: 20rpx;
+		background-color: #FFFFFF;
+
+		text:first-of-type {
+			font-weight: bold;
+		}
+
+		&.selected-correct {
+			border: 3rpx solid #44DD8E;
+		}
+
+		&.selected-wrong {
+			border: 3rpx solid #FF6776;
 		}
 	}
 </style>
