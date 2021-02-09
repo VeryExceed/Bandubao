@@ -9,10 +9,16 @@
 		<view class="subject-area">
 			<!-- 题目命题 -->
 			<view class="subject-title">
-				<block v-for="(title,i) in currentSubject.subjectTitle"> :key="i"
+				<block v-for="(title,i) in currentSubject.subjectTitle" :key="i">
 					<view>
 						<template v-if="title.type=='text'">
 							<view>{{title.content}}</view>
+						</template>
+						<template v-else-if="title.type=='image'">
+							<image :src="title.url" mode="aspectFit"></image>
+						</template>
+						<template v-else-if="title.type=='input'">
+							<input type="text" class="answer-fill-area" v-model="youanswer" @input="onInput"/>
 						</template>
 					</view>
 				</block>
@@ -20,7 +26,7 @@
 			<!-- 题目选择 -->
 			<!-- 题目解析 -->
 		</view>
-		
+
 		<!-- 底部操作区 草稿、收藏、下一题 -->
 		<view class="next-subject-btn">
 			<view>
@@ -31,7 +37,7 @@
 				<view :class="['uni-icon','uni-icon-star',{active:storeselected}]" @tap="selectOne('store')"></view>
 				<view>收藏</view>
 			</view>
-			<button type="primary" :class="{'disabled':!isAnswered}">{{btntext}}</button>
+			<button type="primary" :class="{'disabled':!isAnswered}" @tap="gonextsubject">{{btntext}}</button>
 		</view>
 	</view>
 </template>
@@ -41,26 +47,31 @@
 		data() {
 			return {
 				subjectInfos: {
-					subjectNum: 4,
-					subjects: []
+					// subjectNum: 4,
+					// subjects: []
 				},
 				currentSubjectNum: 1,
 				isAnswered: false,
 				btntext: "下一题",
 				draftselected: false,
 				storeselected: false,
-				currentSubject:{} //用来接收当前题目的信息
+				currentSubject: {} //用来接收当前题目的信息
 			};
 		},
+		watch:{// 侦听属性，多用于一步请求的数据联动
+			currentSubjectNum(){
+				this.currentSubject = this.subjectInfos.subjects[this.currentSubjectNum-1]
+			}
+		},
 		onLoad() {
-			this.$http.get('/api/subjectInfo',{})
-				.then(res=>{
-					console.log('res==' +JSON.stringify(res.data));
+			this.$http.get('/api/subjectInfo', {})
+				.then(res => {
+					// console.log('res==' + JSON.stringify(res.data));
 					this.subjectInfos = res.data
-					
+					this.currentSubject = this.subjectInfos.subjects[this.currentSubjectNum-1]
 				})
-				.catch(err=>{
-					
+				.catch(err => {
+
 				});
 		},
 		methods: {
@@ -80,6 +91,15 @@
 						title: this.storeselected ? "收藏成功" : "取消收藏"
 					})
 				}
+			},
+			gonextsubject(){
+				// 点击下一题页数++
+				if(this.currentSubjectNum <this.subjectInfos.subjectNum){
+					this.currentSubjectNum++
+				}
+			},
+			onInput(e){
+				
 			}
 		}
 	}
@@ -129,6 +149,28 @@
 					color: #58BC58;
 				}
 			}
+		}
+	}
+
+	.subject-area {
+		background-color: #f7f8f9;
+		min-height: 1200rpx;
+		margin-top: 120rpx;
+
+		.subject-title {
+			background-color: #FFFFFF;
+			padding-left: 30rpx;
+
+			image {
+				max-width: 80%;
+				max-height: 300rpx;
+			}
+		}
+
+		.answer-fill-area {
+			border: 2rpx solid #09BB07;
+			width: 200rpx;
+			align-content: center;
 		}
 	}
 </style>
