@@ -6,7 +6,7 @@
 			</view>
 		</uni-nav-bar>
 		<!-- 答题区 -->
-		<view class="subject-area">
+		<scroll-view scroll-y class="subject-area">
 			<!-- 题目命题 -->
 			<view class="subject-title">
 				<block v-for="(title,i) in currentSubject.subjectTitle" :key="i">
@@ -41,7 +41,40 @@
 				<view></view>
 			</template> -->
 			<!-- 题目解析 -->
-		</view>
+			<view class="subject-analysis" v-show="isAnswered">
+				<view class="title">
+					<template v-if="isanswercorrect">
+						<text style="color: #44DD8E;">回答正确</text>
+					</template>
+					<template v-else>
+						<text style="color: #FF6776;">回答错误</text>
+					</template>
+				</view>
+				<view class="publish-answer">
+					<text>正确答案是:
+						<text style="color:44DD8E">
+							<template v-if="currentSubject.type=='gapfilling'">
+								{{currentSubject.correctAnswer}}
+							</template>
+							<template v-else>
+								第{{Number(currentSubject.correctAnswer)+1}}项
+							</template>
+						</text>
+					</text>
+					<text v-if="!isanswercorrect">您的答案是：
+						<text style="color: #FF6776;">
+							{{youanswer}}
+						</text>
+					</text>
+				</view>
+				<view style="color: FF6776;">
+					<text>【解析】</text>
+				</view>
+				<view>
+					<text>{{currentSubject.analysis}}</text>
+				</view>
+			</view>
+		</scroll-view>
 
 		<!-- 底部操作区 草稿、收藏、下一题 -->
 		<view class="next-subject-btn">
@@ -73,7 +106,8 @@
 				storeselected: false,
 				currentSubject: {}, //用来接收当前题目的信息
 				selectOptionIndex: -1,
-				isanswercorrect: false
+				isanswercorrect: false,
+				youanswer:""
 			};
 		},
 		watch: { // 侦听属性，多用于一步请求的数据联动
@@ -111,28 +145,59 @@
 				}
 			},
 			onInput(e) {
-
+				if(this.youanswer == this.currentSubject.correctAnswer) {
+					this.isanswercorrect = true
+				}
 			},
 			gonextsubject() {
 				// 点击下一题页数++
-				if (this.currentSubjectNum < this.subjectInfos.subjectNum) {
-					this.currentSubjectNum++
-					this.draftselected = false; // 点击下一题初始化
-					this.storeselected = false;
-					this.selectOptionIndex = -1;
-					this.isAnswered = false;
-					uni.pageScrollTo({
-						scrollTop:0,
-						duration:100
-					});
+				if (this.currentSubject.type == 'gapfilling'){
+					if(this.youanswer == '') {
+						uni.showToast({
+							title:"请先填空！"
+						})
+						return;
+					}
+					this.isAnswered = true
+					if (this.currentSubjectNum == this.subjectInfos.subjectNum) {
+						this.btntext = '查看结果'
+					}else {
+						this.btntext = '下一题'
+					}
 				}
+				else {
+					if (!this.isAnswered) {
+						uni.showToast({
+							title:"请先选答题目！"
+						})
+						return; // 函数到此停止运行
+					}
+					if (this.currentSubjectNum < this.subjectInfos.subjectNum) {
+						this.currentSubjectNum++ // 页数++
+						this.draftselected = false; // 点击下一题初始化
+						this.storeselected = false;
+						this.selectOptionIndex = -1;
+						this.isAnswered = false;
+						this.isanswercorrect = false,
+						this.youanswer= ''
+						uni.pageScrollTo({
+							scrollTop:0,
+							duration:100
+						});
+						if (this.currentSubject.type == 'gapfilling') {
+							this.btntext = '提交'
+						}
+					}
+				}
+				
 			},
 			selectoneOption(i, option) {
 				if (!this.isAnswered) {
 					this.selectOptionIndex = i //等于当前题目的key值 i
 					this.isAnswered = true;
-					if (i == option.correctAnswer) { // 当前i 等于正确的答案时
-						this.isanswercorrect = true  
+					this.youanswer = '第' + (i + 1) + '项'
+					if (i == this.currentSubject.correctAnswer) { // 当前i 等于正确的答案时
+						this.isanswercorrect = true   
 					}
 				}
 			}
@@ -142,6 +207,13 @@
 </script>
 
 <style lang="scss">
+	html,
+	body,
+	page {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
 	.uni-navbar__header-container.uni-navbar__content_view {
 		display: flex;
 		justify-content: center;
@@ -190,8 +262,9 @@
 
 	.subject-area {
 		background-color: #f7f8f9;
-		min-height: 1200rpx;
-		margin-top: 120rpx;
+		// min-height: 1200rpx;
+		height: 1000rpx;
+		margin-top: 80rpx;
 
 		.subject-title {
 			background-color: #FFFFFF;
@@ -226,6 +299,22 @@
 
 		&.selected-wrong {
 			border: 3rpx solid #FF6776;
+		}
+	}
+	.subject-analysis {
+		margin: 30rpx;
+		padding: 20rpx;
+		border-radius: 20rpx;
+		background-color: #FFFFFF;
+		.title{
+			display: flex;
+			justify-content: center;
+			font-size: 30rpx;
+		}
+		.publish-answer{
+			display: felx;
+			justify-content: space-between;
+			
 		}
 	}
 </style>
