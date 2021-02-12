@@ -107,7 +107,7 @@
 				currentSubject: {}, //用来接收当前题目的信息
 				selectOptionIndex: -1,
 				isanswercorrect: false,
-				youanswer:""
+				youanswer: ""
 			};
 		},
 		watch: { // 侦听属性，多用于一步请求的数据联动
@@ -145,51 +145,50 @@
 				}
 			},
 			onInput(e) {
-				if(this.youanswer == this.currentSubject.correctAnswer) {
+				if (this.youanswer == this.currentSubject.correctAnswer) {
 					this.isanswercorrect = true
 				}
 			},
 			gonextsubject() {
 				// 点击下一题页数++
-				if (this.currentSubject.type == 'gapfilling'){
-					if(this.youanswer == '') {
+				if (this.currentSubject.type == 'gapfilling') {
+					if (this.youanswer == '') {
 						uni.showToast({
-							title:"请先填空！"
+							title: "请先填空！"
 						})
 						return;
 					}
 					this.isAnswered = true
 					if (this.currentSubjectNum == this.subjectInfos.subjectNum) {
 						this.btntext = '查看结果'
-					}else {
+					} else {
 						this.btntext = '下一题'
 					}
-				}
-				else {
+				} else {
 					if (!this.isAnswered) {
 						uni.showToast({
-							title:"请先选答题目！"
+							title: "请先选答题目！"
 						})
 						return; // 函数到此停止运行
 					}
 					if (this.currentSubjectNum < this.subjectInfos.subjectNum) {
-						this.currentSubjectNum++ // 页数++
-						this.draftselected = false; // 点击下一题初始化
+						this.currentSubjectNum++ //页数++
+						this.draftselected = false; //点击下一题初始化
 						this.storeselected = false;
 						this.selectOptionIndex = -1;
 						this.isAnswered = false;
 						this.isanswercorrect = false,
-						this.youanswer= ''
+							this.youanswer = ''
 						uni.pageScrollTo({
-							scrollTop:0,
-							duration:100
+							scrollTop: 0,
+							duration: 100
 						});
 						if (this.currentSubject.type == 'gapfilling') {
 							this.btntext = '提交'
 						}
 					}
 				}
-				
+
 			},
 			selectoneOption(i, option) {
 				if (!this.isAnswered) {
@@ -197,7 +196,7 @@
 					this.isAnswered = true;
 					this.youanswer = '第' + (i + 1) + '项'
 					if (i == this.currentSubject.correctAnswer) { // 当前i 等于正确的答案时
-						this.isanswercorrect = true   
+						this.isanswercorrect = true
 					}
 				}
 			}
@@ -214,6 +213,7 @@
 		height: 100%;
 		overflow: hidden;
 	}
+
 	.uni-navbar__header-container.uni-navbar__content_view {
 		display: flex;
 		justify-content: center;
@@ -301,20 +301,23 @@
 			border: 3rpx solid #FF6776;
 		}
 	}
+
 	.subject-analysis {
 		margin: 30rpx;
 		padding: 20rpx;
 		border-radius: 20rpx;
 		background-color: #FFFFFF;
-		.title{
+
+		.title {
 			display: flex;
 			justify-content: center;
 			font-size: 30rpx;
 		}
-		.publish-answer{
+
+		.publish-answer {
 			display: felx;
 			justify-content: space-between;
-			
+
 		}
 	}
 </style>
