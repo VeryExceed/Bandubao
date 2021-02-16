@@ -43,7 +43,12 @@
 			}
 		}, {
 			"path": "pages/mine/mine",
-			"style": {}
+			"style": {
+				"app-plus":{
+					"titleNView":false
+					
+				}
+			}
 		}, {
 			"path": "pages/lesson-more-list/lesson-more-list",
 			"style": {}
