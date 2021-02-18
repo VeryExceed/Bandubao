@@ -18,7 +18,7 @@
 				</view>
 			</template>
 		</view>
-		
+
 		<!-- 开通VIP -->
 		<view class="get-vip" @tap="openVIP">
 			<image src="../../static/img/mine/getVIP.png" mode="widthFix"></image>
@@ -59,135 +59,157 @@
 	export default {
 		data() {
 			return {
-				bgImg:"../../static/img/mine/bg-self.jpg",
-				welcomWord:"hi~欢迎来到学习园地！",
-				headImage:"../../static/img/firstpage/katoon2.jpg",
-				userinfo:{
-					userName:"雯雯",
-					grade:"一年级"
+				bgImg: "../../static/img/mine/bg-self.jpg",
+				welcomWord: "hi~欢迎来到学习园地！",
+				headImage: "../../static/img/firstpage/katoon2.jpg",
+				userinfo: {
+					userName: "雯雯",
+					grade: "一年级"
 				},
-				hasLogin:true
+				hasLogin: true
 			};
 		},
-		methods:{
-			modifyInfo(){
-				
+		methods: {
+			modifyInfo() {
+				uni.navigateTo({
+					url:"../self-info/self-info"
+				})
 			},
-			registerLogin(){
-				
+			registerLogin() {
+
 			},
-			openVIP(){},
-			inviteFriend(){},
-			viewWeeklyreport(){},
-			setAppStates(){}
+			openVIP() {},
+			inviteFriend() {},
+			viewWeeklyreport() {},
+			setAppStates() {}
 		}
 	}
 </script>
 
 <style lang="scss">
-.body-content {
-	position: relative;
-}
-.person-bg {
-	width: 100%;
-	height: 300rpx;
-	border-radius: 0 0 100rpx 100rpx;
-}
-.welcome-word {
-	position: absolute;
-	top: 80rpx;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-.person-head-area {
-	display: flex;
-	align-items: center;
-	width: 90%;
-	height: 200rpx;
-	margin: 0 auto;
-	border-radius: 10rpx;
-	box-shadow: 0 0 20rpx rgba(213,213,213,255);
-	position: absolute;
-	background-color: white;
-	left: 5%;
-	top: 150rpx;
-	>image{
-		width: 150rpx;
-		border-radius: 100%;
-		margin-left: 10rpx;
+	.body-content {
+		position: relative;
 	}
-	.login-info {
-		margin-left: 10rpx;
+
+	.person-bg {
+		width: 100%;
+		height: 300rpx;
+		border-radius: 0 0 100rpx 100rpx;
+	}
+
+	.welcome-word {
+		position: absolute;
+		top: 80rpx;
+		width: 100%;
 		display: flex;
-		flex-direction: column;
-		width: 80%;
-		text{
-			font-size: 30rpx;
-			&:last-child {
-				font-size: 20rpx;
+		justify-content: center;
+	}
+
+	.person-head-area {
+		display: flex;
+		align-items: center;
+		width: 90%;
+		height: 200rpx;
+		margin: 0 auto;
+		border-radius: 10rpx;
+		box-shadow: 0 0 20rpx rgba(213, 213, 213, 255);
+		position: absolute;
+		background-color: white;
+		left: 5%;
+		top: 150rpx;
+
+		>image {
+			width: 150rpx;
+			border-radius: 100%;
+			margin-left: 10rpx;
+		}
+
+		.login-info {
+			margin-left: 10rpx;
+			display: flex;
+			flex-direction: column;
+			width: 80%;
+
+			text {
+				font-size: 30rpx;
+
+				&:last-child {
+					font-size: 20rpx;
+				}
+			}
+		}
+
+		.icon-lianzi {
+			color: #ff05c9;
+			font-size: 80rpx;
+			margin-right: 10rpx;
+		}
+
+		.please-login {
+			margin-left: 10rpx;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+
+			>text {
+				font-size: 30rpx;
+			}
+
+			>button {
+				background-color: #FFDD57;
+				margin: 0;
+				border-radius: 50rpx 0 0 50rpx;
+				position: static;
+				padding-top: 10rpx;
+				padding-bottom: 10rpx;
 			}
 		}
 	}
-	.icon-lianzi{
-		color: #ff05c9;
-		font-size: 80rpx;
-		margin-right: 10rpx;
-	}
-	.please-login{
-		margin-left: 10rpx;
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		>text{
-			font-size: 30rpx;
-		}
-		>button{
-			background-color: #FFDD57;
-			margin: 0;
-			border-radius: 50rpx 0 0 50rpx;
-			position: static;
-			padding-top: 10rpx;
-			padding-bottom: 10rpx;
-		}
-	}
-}
-.get-vip {
-	margin: 60rpx 0 10rpx 0;
-	display: flex;
-	align-items: center;
-	height: 120rpx;
-	image{
-		width: 100%;//image mode=widthFix时，保持图片填充满外层view元素
-		margin: 0 5%;
-	}
-}
-.set-list>view{
-	margin: 0 5%;
-	padding: 30rpx 0;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border-bottom: 5rpx solid #F7F8F9;
-	.left {
+
+	.get-vip {
+		margin: 60rpx 0 10rpx 0;
 		display: flex;
 		align-items: center;
-		.iconfont {
-			font-size: 40rpx;
-			margin-right: 20rpx;
-		}
-		.icon-weekly{
-			color:#8BDFFF;
-		}
-		.icon-shezhi{
-			color: #BDBEC0;
-		}
-		.icon-yaoqing{
-			color: #c06305;
+		height: 120rpx;
+
+		image {
+			width: 100%; //image mode=widthFix时，保持图片填充满外层view元素
+			margin: 0 5%;
 		}
 	}
-	>text{
-		color: #C4C4C6;
+
+	.set-list>view {
+		margin: 0 5%;
+		padding: 30rpx 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 5rpx solid #F7F8F9;
+
+		.left {
+			display: flex;
+			align-items: center;
+
+			.iconfont {
+				font-size: 40rpx;
+				margin-right: 20rpx;
+			}
+
+			.icon-weekly {
+				color: #8BDFFF;
+			}
+
+			.icon-shezhi {
+				color: #BDBEC0;
+			}
+
+			.icon-yaoqing {
+				color: #c06305;
+			}
+		}
+
+		>text {
+			color: #C4C4C6;
+		}
 	}
-}
 </style>

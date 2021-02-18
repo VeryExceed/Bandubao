@@ -89,6 +89,13 @@
             }
             
         }
+        ,{
+            "path" : "pages/self-info/self-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人信息"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
