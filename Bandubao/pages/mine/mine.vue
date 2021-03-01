@@ -78,7 +78,11 @@
 			registerLogin() {
 
 			},
-			openVIP() {},
+			openVIP() {
+				uni.navigateTo({
+					url:"../member-center/member-center"
+				})
+			},
 			inviteFriend() {},
 			viewWeeklyreport() {},
 			setAppStates() {}

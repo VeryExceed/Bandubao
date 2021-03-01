@@ -96,6 +96,14 @@
                 "navigationBarTitleText": "个人信息"
             }
         }
+        ,{
+            "path" : "pages/member-center/member-center",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "会员中心"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
