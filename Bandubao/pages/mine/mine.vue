@@ -92,7 +92,11 @@
 					url:"../learning-report/learning-report"
 				})
 			},
-			setAppStates() {}
+			setAppStates() {
+				uni.navigateTo({
+					url:"../app-set/app-set"
+				})
+			}
 		}
 	}
 </script>

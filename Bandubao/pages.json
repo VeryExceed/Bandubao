@@ -120,6 +120,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/app-set/app-set",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
