@@ -36,7 +36,7 @@
 				<text>></text>
 			</view>
 			<!-- 学习周报 -->
-			<view class="weekly-report" @top="viewWeeklyreport">
+			<view class="weekly-report" @tap="viewWeeklyreport">
 				<view class="left">
 					<view class="iconfont icon-weekly"></view>
 					<text>学习周报</text>
@@ -44,7 +44,7 @@
 				<text>></text>
 			</view>
 			<!-- 设置 -->
-			<view class="app-set" @top="setAppStates">
+			<view class="app-set" @tap="setAppStates">
 				<view class="left">
 					<view class="iconfont icon-shezhi"></view>
 					<text>设置</text>
@@ -84,7 +84,11 @@
 				})
 			},
 			inviteFriend() {},
-			viewWeeklyreport() {},
+			viewWeeklyreport(){
+				uni.navigateTo({
+					url:"../learning-report/learning-report"
+				})
+			},
 			setAppStates() {}
 		}
 	}

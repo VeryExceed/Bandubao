@@ -29,8 +29,10 @@
 			<radio-group name="payway" @change="radioChange">
 				<label class="uni-list-cell uni-list-cell-pd">
 					<view>
-						<view class="uni-icon uni-icon-weixin"></view>
-						<text>微信支付</text>
+						<view>
+							<uni-icons class="weixin" type="weixin" size="25" color="#58bc58"></uni-icons>
+							<text>微信支付</text>
+						</view>
 					</view>
 					<view>
 						<radio value="wx" checked="true" />
@@ -141,8 +143,8 @@
 
 <style lang="scss">
 	.body {
-		padding-bottom: 20rpx;
-		height: 1500rpx;
+		padding-bottom: 100rpx;
+		height: 1600px;
 		background-color: #F0F7FF;
 	}
 
@@ -213,6 +215,7 @@
 					margin-left: 10rpx;
 				}
 			}
+
 			>text {
 				float: right;
 				transform: translate(48upx, 6upx);
@@ -231,29 +234,31 @@
 	}
 
 	.pay-way {
-		margin-right: 25rpx;
+		margin-right: 25upx;
 
 		label {
 			>view {
 				display: flex;
-
+				
 				>view {
-					margin: 0 15rpx;
-
+					margin: -7rpx 0 0 10rpx;
 				}
-
-				.uni-icon-weixin {
-					color: #41B135;
+				
+				.uni-icons {
+					margin-left: 10rpx;
+					margin-right: 5rpx;
 				}
 
 				.icon-zhifubao {
 					color: #0BA2F8;
-					font-size: 32rpx;
+					font-size: 32upx;
 					margin-right: 0;
 				}
+
 			}
 		}
 	}
+
 	.bottom-button {
 		background-color: #FFFFFF;
 		position: fixed;
@@ -262,13 +267,13 @@
 		height: 120upx;
 		align-items: center;
 		display: flex;
-	
+
 		button {
 			width: 80%;
 			border-radius: 50upx;
 			background-color: #FE7B62;
 		}
-	
+
 		button.button-hover {
 			//button-hover button 组件自带的点击class名称
 			background-color: #FE7B62;

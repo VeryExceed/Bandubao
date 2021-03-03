@@ -104,6 +104,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/learning-report/learning-report",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "学习周报"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
