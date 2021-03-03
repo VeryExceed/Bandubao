@@ -56,6 +56,7 @@
 </template>
 
 <script>
+	import { mapState,mapMutations } from 'vuex'
 	export default {
 		data() {
 			return {
@@ -66,9 +67,9 @@
 					userName: "雯雯",
 					grade: "一年级"
 				},
-				hasLogin: true
 			};
 		},
+		computed:mapState(['hasLogin']),
 		methods: {
 			modifyInfo() {
 				uni.navigateTo({
@@ -76,7 +77,9 @@
 				})
 			},
 			registerLogin() {
-
+				uni.navigateTo({
+					url:"../mobile-login/mobile-login"
+				})
 			},
 			openVIP() {
 				uni.navigateTo({

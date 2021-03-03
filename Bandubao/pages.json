@@ -112,6 +112,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/mobile-login/mobile-login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": ""
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
