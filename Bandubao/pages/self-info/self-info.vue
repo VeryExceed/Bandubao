@@ -75,6 +75,7 @@
 </template>
 
 <script>
+	import {mapState,mapMutations} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -84,15 +85,14 @@
 				birthday:"2021-02-17",
 				city:"北京",
 				userId:"213321123",
-				userinfo:{
-					grade:"一年级"
-				},
 				bindPhone:"18388888181",
 				cityPickerValueDefault:[0,0,1],
 				showpopup:false
 			};
 		},
+		computed:mapState(['userinfo']),
 		methods:{
+			...mapMutations(['updateUserinfo']),
 			onConfirm(e){
 				this.city=e.label
 			},
@@ -125,6 +125,7 @@
 			},
 			hidePopup(text) {
 				this.userinfo.grade = text;
+				this.updateUserinfo(this.userinfo)
 			},
 			showPopupGrade(){
 				this.$refs.popupgradeself.showPopup()

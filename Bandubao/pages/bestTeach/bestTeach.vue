@@ -3,7 +3,7 @@
 		<!-- 自定义导航栏 -->
 		<uni-nav-bar @clickLeft="selectGrade" @clickRight="openWrongNote" fixed>
 			<view class="lesson-bar-left" slot="left">
-				<text>{{selectedGrade}} ▼</text>
+				<text>{{userinfo.grade}} ▼</text>
 			</view>
 			<view class="lesson-bar-middle">
 				<button type="default" :class="{'select-active':selectActive}" @tap="selectLearnButtonChange('select')">选课</button>
@@ -69,6 +69,10 @@
 </template>
 
 <script>
+	import {
+	    mapState,
+	    mapMutations
+	} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -89,7 +93,11 @@
 				})
 				.catch(err => {});
 		},
+		computed:{
+			...mapState(["userinfo"])
+		},
 		methods: {
+			...mapMutations(['updateUserinfo']),
 			selectGrade() {
 				this.$refs.popupGradeIndex.showPopup()
 			},
@@ -113,12 +121,32 @@
 				}
 			},
 			hidePopup(text) {
-				this.selectedGrade = text
+				this.userinfo.grade = text
+				this.updateUserinfo(this.userinfo)
 			},
 			openLessonDetail(v) {
-				uni.navigateTo({
-					url: "../lesson-more-list/lesson-more-list?type=" + v
-				})
+				if(this.userinfo.ismember) {
+					uni.navigateTo({
+						url: "../lesson-more-list/lesson-more-list?type=" + v
+					})
+				}else {
+					uni.showModal({
+						title:'提示',
+						content:'您还未开通会员，是否要开通会员？',
+						cancelText:'再考虑下',
+						confirmText:'去开通',
+						success: function (res) {
+						    if (res.confirm) {
+						        uni.navigateTo({
+						        	url:'../member-center/member-center'
+						        })
+						    } else if (res.cancel) {
+						        
+						    }
+						}
+					})
+				}
+				
 			},
 			tapSelect(i) {
 				this.tabIndex = i

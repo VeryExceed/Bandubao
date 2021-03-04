@@ -63,13 +63,9 @@
 				bgImg: "../../static/img/mine/bg-self.jpg",
 				welcomWord: "hi~欢迎来到学习园地！",
 				headImage: "../../static/img/firstpage/katoon2.jpg",
-				userinfo: {
-					userName: "雯雯",
-					grade: "一年级"
-				},
 			};
 		},
-		computed:mapState(['hasLogin']),
+		computed:mapState(['hasLogin','userinfo']),
 		methods: {
 			modifyInfo() {
 				uni.navigateTo({

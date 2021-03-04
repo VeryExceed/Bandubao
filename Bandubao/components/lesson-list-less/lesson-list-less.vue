@@ -32,6 +32,7 @@
 </template>
 
 <script>
+	import {mapState,mapMutations} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -58,11 +59,32 @@
 			}
 			
 		},
+		computed:{
+			...mapState(['userinfo'])
+		},
 		methods:{
 			openMoreData(type,yswtype){
-				uni.navigateTo({
-					url:'../lesson-more-list/lesson-more-list?type='+type+'&yswtype='+yswtype
-				})
+				if(this.userinfo.ismember) {
+					uni.navigateTo({
+						url:'../lesson-more-list/lesson-more-list?type='+type+'&yswtype='+yswtype
+					})
+				}else {
+					uni.showModal({
+						title:'提示',
+						content:'您还未开通会员，是否要开通会员？',
+						cancelText:'再考虑下',
+						confirmText:'去开通',
+						success: function (res) {
+						    if (res.confirm) {
+						        uni.navigateTo({
+						        	url:'../member-center/member-center'
+						        })
+						    } else if (res.cancel) {
+						        
+						    }
+						}
+					})
+				}
 			}
 		}
 	}

@@ -170,6 +170,8 @@
 </template>
 
 <script>
+	import {mapState,mapMutations} from 'vuex';
+	
 	export default {
 		data() {
 			return {
@@ -179,19 +181,33 @@
 		onLoad() {
 
 		},
+		computed:mapState(['userinfo']),
 		// 监听导航栏按钮点击事件
 		onNavigationBarButtonTap(e) {
 			if (e.index == 1) {
 				this.$refs.popupGradeIndex.showPopup()
 			}
 		},
+		onShow() {
+			// #ifdef APP-PLUS
+			var webView = this.$mp.page.$getAppWebview();
+			// 修改buttons
+			// index: 按钮索引, style {WebviewTitleNViewButtonStyles }  
+			webView.setTitleNViewButtonStyle(1, {  
+			    text: this.userinfo.grade,  
+			});  
+			// #endif 
+		},
 		methods: {
+			...mapMutations(['updateUserinfo']),
 			gotoLearn() {
 				uni.switchTab({
 					url: "../bestTeach/bestTeach"
 				})
 			},
 			hidePopup(text) {
+				this.userinfo.grade = text
+				this.updateUserinfo(this.userinfo)
 				//移动端APP适用，H5端不适用
 				// #ifdef APP-PLUS  
 				// $getAppWebview() 可以得到当前webview的对象实例

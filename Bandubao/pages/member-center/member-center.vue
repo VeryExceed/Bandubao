@@ -57,16 +57,14 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	export default {
 		data() {
 			return {
 				currentpayway: "wx",
-				userinfo: {
-					userName: "雯雯",
-					ismember: false,
-					grade: "一年级",
-					avatar: "../../static/img/firstpage/katoon2.jpg",
-				},
 				swiper: {
 					index: 0,
 					list: [{
@@ -94,7 +92,9 @@
 				}
 			};
 		},
+		computed: mapState(['userinfo']),
 		methods: {
+			...mapMutations(['updateUserinfo']),
 			swiperChange(e) {
 				console.log("==" + e.detail.current);
 				this.swiper.index = e.detail.current
@@ -103,6 +103,8 @@
 				this.currentpayway = e.target.value
 			},
 			dopay() {
+				this.userinfo.ismember = true
+				this.updateUserinfo(this.userinfo)
 				if (this.currentpayway === 'wx') {
 					let orderInfo = {
 						"appid": "wx688d407f389fa7dd",
@@ -239,11 +241,11 @@
 		label {
 			>view {
 				display: flex;
-				
+
 				>view {
 					margin: -7rpx 0 0 10rpx;
 				}
-				
+
 				.uni-icons {
 					margin-left: 10rpx;
 					margin-right: 5rpx;

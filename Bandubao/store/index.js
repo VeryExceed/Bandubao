@@ -23,6 +23,9 @@ const store = new Vuex.Store({
 		logout(state) {
 			state.userName = "";
 			state.hasLogin = false;
+		},
+		updateUserinfo(state,userinfo){
+			state.userinfo = userinfo
 		}
 	}
 })
